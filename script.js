@@ -26,15 +26,18 @@ $(function() {
             for (dept of data['records']) {
                 var shape = dept['fields']['geo_shape'];
                 L.geoJSON(shape).addTo(mymap);
+                var chfLieu = dept['fields']['nom_chf'];
+
+                $.get({
+                    url: 'http://api.openweathermap.org/data/2.5/weather?q='+ chfLieu+',fr&appid=4ae1deede5f40b035e56949606e20525',
+                    dataType: "json",
+                    success: function(weather) {
+                        console.log(weather);
+                    }
+                })
             }
         }
-    })
 
-    $.get({
-        url: 'http://api.openweathermap.org/data/2.5/forecast?id=524901&APPID=4ae1deede5f40b035e56949606e20525',
-        dataType: "json",
-        success: function(weather) {
-            console.log(weather);
-        }
     })
-})
+    var marker = L.marker([44.52, 3.5]).addTo(mymap);
+});
